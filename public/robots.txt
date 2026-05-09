@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /go/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://time4growth.in/sitemap.xml
