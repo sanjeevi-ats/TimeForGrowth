@@ -5,28 +5,28 @@ const footerLinks = {
   about: {
     heading: "About",
     content:
-      "Time For Growth is a YouTube-first media brand that curates the best gear for global audiences — intelligently routing you to the right store for your region.",
+      "Time For Growth helps ambitious people discover better tools for productivity, mindset, wellness, and success.",
   },
   quickLinks: {
     heading: "Quick Links",
     links: [
       { href: "/", label: "Home" },
       { href: "/products", label: "Products" },
-      { href: "/reviews", label: "Reviews" },
-      { href: "/buying-guides", label: "Buying Guides" },
+      // { href: "/reviews", label: "Reviews" },
+      // { href: "/buying-guides", label: "Buying Guides" },
       { href: "/about", label: "About" },
-      { href: "/contact", label: "Contact" },
+      // { href: "/contact", label: "Contact" },
     ],
   },
   categories: {
     heading: "Categories",
     links: [
-      { href: "/products?category=cameras", label: "Cameras" },
-      { href: "/products?category=audio", label: "Audio" },
-      { href: "/products?category=productivity", label: "Productivity" },
-      { href: "/products?category=lighting", label: "Lighting" },
-      { href: "/products?category=accessories", label: "Accessories" },
-      { href: "/products?category=mobile-gear", label: "Mobile Gear" },
+      { href: "/products?category=books", label: "Books" },
+      { href: "/products?category=journals", label: "Journals" },
+      { href: "/products?category=gadgets", label: "Gadgets" },
+      // { href: "/products?category=lighting", label: "Lighting" },
+      // { href: "/products?category=accessories", label: "Accessories" },
+      { href: "/products?category=wellness", label: "Wellness" },
     ],
   },
   connect: {
