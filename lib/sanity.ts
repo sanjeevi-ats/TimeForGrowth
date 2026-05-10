@@ -35,7 +35,7 @@ export function urlFor(source: any) {
 export const productFields = `
   _id,
   name,
-  "slug": slug.current,
+  slug,
   "category": category-> { name, "slug": slug.current },
   tags,
   shortDescription,

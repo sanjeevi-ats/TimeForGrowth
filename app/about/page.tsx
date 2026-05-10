@@ -12,36 +12,70 @@ export default function AboutPage() {
 
       <div className="space-y-6 text-[#333] leading-relaxed">
         <p>
-          <strong>Time For Growth</strong> is a YouTube-first media brand built around honest gear recommendations for creators, tech enthusiasts, and everyday consumers across the globe. What started as a single channel has grown into a full platform — and this store is the next step in that evolution.
+          <strong>Welcome to Time For Growth.</strong>
         </p>
 
-        <h2 className="text-2xl font-black text-black mt-10">What We Do</h2>
         <p>
-          We research, test, and review gear — cameras, audio equipment, productivity tools, lighting setups, and more. Every product on this site has been assessed by our team. We don't list something unless we genuinely believe it's worth your money.
+          Time For Growth was created to help students and young people improve their life, build better habits, and become a better version of themselves.
         </p>
 
-        <h2 className="text-2xl font-black text-black mt-10">Smarter Shopping, Wherever You Are</h2>
         <p>
-          One of the biggest frustrations with global affiliate sites is broken links. A reader in India clicks a link to Amazon.com and finds the product doesn't ship there. That's a dead click for the creator, and a frustrating experience for you.
-        </p>
-        <p>
-          We've solved this problem. Our platform detects your country and routes you to the right store — Amazon.in or Flipkart for India, Amazon.co.uk for the UK, Amazon.ca for Canada, and so on. You always end up somewhere you can actually buy the product.
+          My journey started with my YouTube channel, where I share videos about self-improvement, discipline, productivity, focus, motivation, and better habits.
         </p>
 
-        <h2 className="text-2xl font-black text-black mt-10">How We Make Recommendations</h2>
         <p>
-          Our recommendations are always based on merit, not commercial relationships. We use a combination of hands-on testing, community feedback, and category research. Our editorial team has the final say on every product that appears on this site.
+          Over the time, I realized something important. A lot of people want to change their life, stay focused, and become more productive… but they often don't know where to start or what tools can actually help them.
         </p>
 
-        <h2 className="text-2xl font-black text-black mt-10">Affiliate Transparency</h2>
         <p>
-          We earn affiliate commissions when you click one of our links and make a purchase. This costs you nothing extra — the retailer pays us a small percentage as a thank-you for sending you their way. This is how we keep the site free and the content independent.
+          That's why I created this website.
         </p>
+
+        <h2 className="text-2xl font-black text-black mt-10">What is Time For Growth?</h2>
         <p>
-          We will never recommend a product solely because of a higher commission rate. Our integrity is the reason you trust us, and we take that seriously.
+          Time For Growth is more than just a website. It is a place where you can discover useful resources that support your self-improvement journey.
         </p>
+
         <p>
-          For the full disclosure, see our <a href="/affiliate-disclosure" className="underline hover:text-black transition-colors">Affiliate Disclosure</a>.
+          Here, I share:
+        </p>
+        <ul className="list-disc list-inside space-y-2 ml-2">
+          <li>✅ self-improvement books</li>
+          <li>✅ journals and planners</li>
+          <li>✅ productivity gadgets</li>
+          <li>✅ study tools</li>
+          <li>✅ and other useful products that can help improve focus, discipline, and daily life</li>
+        </ul>
+
+        <h2 className="text-2xl font-black text-black mt-10">How We Select Products</h2>
+        <p>
+          Every product recommended on this website is selected with one goal in mind: To help you grow, stay productive, and build a better future for yourself.
+        </p>
+
+        <h2 className="text-2xl font-black text-black mt-10">Our Philosophy</h2>
+        <p>
+          I believe real change does not happen overnight. It happens slowly through small daily habits, better routines, and consistent effort.
+        </p>
+
+        <p>
+          So my goal is simple: To help people stop wasting time, take control of their life, and become the person they truly want to be.
+        </p>
+
+        <h2 className="text-2xl font-black text-black mt-10">Is This For You?</h2>
+        <p>
+          If you are someone who wants to improve your mindset, build discipline, stay focused, and create a better life for yourself, then you are in the right place.
+        </p>
+
+        <p>
+          Your journey to becoming a better version of yourself starts now.
+        </p>
+
+        <p>
+          <strong>Let's grow together.</strong>
+        </p>
+
+        <p className="text-sm text-[#666] mt-10">
+          For more information about our affiliate partnerships and transparency, see our <a href="/affiliate-disclosure" className="underline hover:text-black transition-colors">Affiliate Disclosure</a>.
         </p>
       </div>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Link from "next/link";
 import { Search, X, ArrowRight, Package, BookOpen, FileText, Loader2 } from "lucide-react";
 
@@ -153,7 +153,7 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
         </div>
 
         {/* Results */}
-        <div className="overflow-y-auto" style={{ maxHeight: "calc(80vh - 72px)" }}>
+        <div className="overflow-y-auto" style={{ maxHeight: "calc(80vh - 60px)" }}>
           {/* Not configured */}
           {results?.unconfigured && (
             <div className="px-5 py-10 text-center">
