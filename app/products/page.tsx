@@ -190,7 +190,7 @@ export default async function ProductsPage({
 
       {/* Product grid */}
       {displayed.length > 0 ? (
-        <div className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-6">
+        <div className="space-y-4">
           {displayed.map((product, index) => (
             <div key={product._id} className="relative">
               {isTop10 && (
@@ -198,7 +198,7 @@ export default async function ProductsPage({
                   #{index + 1}
                 </div>
               )}
-              <ProductCard product={product} />
+              <ProductCard product={product} variant="horizontal" />
             </div>
           ))}
         </div>

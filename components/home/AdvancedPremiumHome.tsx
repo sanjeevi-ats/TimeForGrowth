@@ -47,7 +47,7 @@ export function AdvancedHeroSlider() {
   ];
 
   return (
-    <section className="relative w-full h-screen bg-black overflow-hidden">
+    <section className="relative w-full h-screen bg-black overflow-hidden flex items-center justify-center">
       {/* Swiper Carousel */}
       <Swiper
         ref={swiperRef}
@@ -101,9 +101,9 @@ export function AdvancedHeroSlider() {
             </motion.div>
 
             {/* Content - properly layered with smooth transitions */}
-            <div className="relative z-20 w-full h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
+            <div className="relative z-20 w-full h-full flex items-center justify-center px-14 sm:px-12 lg:px-32 py-8 sm:py-0">
               <motion.div
-                className="w-full max-w-3xl mx-auto text-center space-y-6 sm:space-y-8"
+                className="w-full max-w-2xl sm:max-w-4xl mx-auto text-center space-y-3 sm:space-y-6 md:space-y-8"
                 key={`slide-${index}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -116,7 +116,7 @@ export function AdvancedHeroSlider() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -40, scale: 0.95 }}
                   transition={{ duration: 0.8 }}
-                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight sm:leading-tight md:leading-snug lg:leading-snug tracking-tight will-change-transform"
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-tight tracking-tight will-change-transform"
                 >
                   {slide.title}
                 </motion.h1>
@@ -127,7 +127,7 @@ export function AdvancedHeroSlider() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -30 }}
                   transition={{ duration: 0.8, delay: 0.15 }}
-                  className="text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed max-w-2xl mx-auto px-2 sm:px-0 will-change-transform"
+                  className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-200 leading-relaxed max-w-2xl mx-auto px-1 sm:px-0 will-change-transform"
                 >
                   {slide.subtitle}
                 </motion.p>
@@ -138,7 +138,7 @@ export function AdvancedHeroSlider() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -30 }}
                   transition={{ duration: 0.8, delay: 0.3 }}
-                  className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-4 sm:pt-6 will-change-transform"
+                  className="flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4 justify-center pt-2 sm:pt-4 md:pt-6 will-change-transform"
                 >
                   <motion.div
                     whileHover={{ scale: 1.05, y: -2 }}
@@ -147,14 +147,14 @@ export function AdvancedHeroSlider() {
                   >
                     <Link 
                       href="/products"
-                      className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white text-black font-bold text-sm sm:text-base rounded-full hover:bg-gray-100 transition-all duration-300 hover:shadow-2xl group whitespace-nowrap"
+                      className="inline-flex items-center justify-center w-full sm:w-auto min-w-[140px] sm:min-w-[160px] md:min-w-[180px] lg:min-w-[200px] px-4 sm:px-6 md:px-8 lg:px-10 py-2.5 sm:py-3 md:py-4 lg:py-3 bg-white text-black font-bold text-xs sm:text-sm md:text-base lg:text-base rounded-full hover:bg-gray-100 transition-all duration-300 hover:shadow-2xl group"
                     >
                       {slide.cta1}
                       <motion.div
                         animate={{ x: [0, 4, 0] }}
                         transition={{ duration: 1.5, repeat: Infinity }}
                       >
-                        <ArrowRight size={18} className="ml-2" />
+                        <ArrowRight size={16} className="ml-2 sm:ml-2" />
                       </motion.div>
                     </Link>
                   </motion.div>
@@ -165,14 +165,14 @@ export function AdvancedHeroSlider() {
                   >
                     <Link 
                       href="/products"
-                      className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-transparent border-2 border-white text-white font-bold text-sm sm:text-base rounded-full hover:bg-white hover:text-black transition-all duration-300 group whitespace-nowrap"
+                      className="inline-flex items-center justify-center w-full sm:w-auto min-w-[140px] sm:min-w-[160px] md:min-w-[180px] lg:min-w-[200px] px-4 sm:px-6 md:px-8 lg:px-10 py-2.5 sm:py-3 md:py-4 lg:py-3 bg-transparent border-2 border-white text-white font-bold text-xs sm:text-sm md:text-base lg:text-base rounded-full hover:bg-white hover:text-black transition-all duration-300 group"
                     >
                       {slide.cta2}
                       <motion.div
                         animate={{ x: [0, 4, 0] }}
                         transition={{ duration: 1.5, repeat: Infinity, delay: 0.2 }}
                       >
-                        <ArrowRight size={18} className="ml-2" />
+                        <ArrowRight size={16} className="ml-2 sm:ml-2" />
                       </motion.div>
                     </Link>
                   </motion.div>
@@ -183,7 +183,7 @@ export function AdvancedHeroSlider() {
         ))}
       </Swiper>
 
-      {/* Custom styles for Swiper - improved */}
+      {/* Custom styles for Swiper - responsive arrow sizing */}
       <style jsx>{`
         :global(.swiper-pagination-bullet) {
           background: rgba(255, 255, 255, 0.4);
@@ -199,22 +199,92 @@ export function AdvancedHeroSlider() {
         :global(.swiper-button-next),
         :global(.swiper-button-prev) {
           color: white;
-          background: rgba(255, 255, 255, 0.15);
-          width: 44px;
-          height: 44px;
+          background: rgba(255, 255, 255, 0.12);
           border-radius: 50%;
           backdrop-filter: blur(10px);
           border: 1px solid rgba(255, 255, 255, 0.2);
           transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 30;
+          /* Mobile: compact small arrows - w-8 h-8 */
+          width: 32px;
+          height: 32px;
+          top: 50%;
+          transform: translateY(-50%);
+          margin-top: 0;
+        }
+        /* Position arrows outside content area on mobile */
+        :global(.swiper-button-prev) {
+          left: 8px;
+        }
+        :global(.swiper-button-next) {
+          right: 8px;
+        }
+        /* Tablet: medium arrows (640px and up) - w-10 h-10 */
+        @media (min-width: 640px) {
+          :global(.swiper-button-next),
+          :global(.swiper-button-prev) {
+            width: 40px;
+            height: 40px;
+          }
+          :global(.swiper-button-prev) {
+            left: 16px;
+          }
+          :global(.swiper-button-next) {
+            right: 16px;
+          }
+        }
+        /* Desktop: larger arrows (1024px and up) - w-12 h-12 */
+        @media (min-width: 1024px) {
+          :global(.swiper-button-next),
+          :global(.swiper-button-prev) {
+            width: 48px;
+            height: 48px;
+          }
+          :global(.swiper-button-prev) {
+            left: 30px;
+          }
+          :global(.swiper-button-next) {
+            right: 30px;
+          }
+        }
+        /* Reduce icon size inside button - mobile: w-3 h-3 */
+        :global(.swiper-button-next::after),
+        :global(.swiper-button-prev::after) {
+          font-size: 12px;
+          line-height: 1;
+          width: 12px;
+          height: 12px;
+        }
+        /* Tablet: w-4 h-4 */
+        @media (min-width: 640px) {
+          :global(.swiper-button-next::after),
+          :global(.swiper-button-prev::after) {
+            font-size: 16px;
+            width: 16px;
+            height: 16px;
+          }
+        }
+        /* Desktop: w-5 h-5 */
+        @media (min-width: 1024px) {
+          :global(.swiper-button-next::after),
+          :global(.swiper-button-prev::after) {
+            font-size: 20px;
+            width: 20px;
+            height: 20px;
+          }
         }
         :global(.swiper-button-next:hover),
         :global(.swiper-button-prev:hover) {
-          background: rgba(255, 255, 255, 0.25);
+          background: rgba(255, 255, 255, 0.2);
           border-color: rgba(255, 255, 255, 0.4);
         }
-        :global(.swiper-button-next::after),
-        :global(.swiper-button-prev::after) {
-          font-size: 18px;
+        :global(.swiper-button-next:disabled),
+        :global(.swiper-button-prev:disabled) {
+          opacity: 0.5;
+          cursor: not-allowed;
         }
       `}</style>
     </section>
