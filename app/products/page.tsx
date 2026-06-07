@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { sanityWriteClient as sanityClient, productFields } from "@/lib/sanity";
 import ProductCard from "@/components/products/ProductCard";
 import type { Product } from "@/lib/types";
+import styles from "./ProductsPage.module.css";
 
 export const metadata: Metadata = {
   title: "All Products",
@@ -131,11 +132,11 @@ export default async function ProductsPage({
   const baseHref = `/products${baseParams.toString() ? `?${baseParams}` : ""}`;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className={styles.pageWrapper}>
       {/* Page header */}
-      <div className="mb-8">
-        <h1 className="text-4xl font-black text-black mb-2">All Products</h1>
-        <p className="text-[#666]">
+      <div className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>All Products</h1>
+        <p className={styles.pageSubtitle}>
           {isTop10
             ? `Showing top ${displayed.length} of ${filtered.length} product${filtered.length !== 1 ? "s" : ""}`
             : `${filtered.length} product${filtered.length !== 1 ? "s" : ""} found`}
@@ -144,7 +145,7 @@ export default async function ProductsPage({
       </div>
 
       {/* Filter bar */}
-      <div className="flex flex-wrap gap-2 mb-8 p-4 bg-[#F9F9F9] rounded-card border border-[#E0E0E0]">
+      <div className={styles.filterBar}>
         {/* All pill — no icon */}
         <FilterLink
           label="All"
@@ -164,7 +165,7 @@ export default async function ProductsPage({
         ))}
 
         {/* Divider */}
-        <span className="hidden sm:block w-px bg-[#E0E0E0] mx-1 self-stretch" />
+        <span className={styles.filterDivider} />
 
         {/* Top 10 filter */}
         <FilterLink
@@ -174,7 +175,7 @@ export default async function ProductsPage({
         />
 
         {/* Sort options pushed to the right */}
-        <span className="ml-auto flex gap-2">
+        <span className={styles.filterSortGroup}>
           <FilterLink
             label="Highest Rated"
             href={`/products${searchParams.category ? `?category=${searchParams.category}&` : "?"}sort=rating${isTop10 ? "&top10=1" : ""}`}
@@ -190,11 +191,11 @@ export default async function ProductsPage({
 
       {/* Product grid */}
       {displayed.length > 0 ? (
-        <div className="space-y-4">
+        <div className={styles.productList}>
           {displayed.map((product, index) => (
-            <div key={product._id} className="relative">
+            <div key={product._id} className={styles.productRow}>
               {isTop10 && (
-                <div className="absolute top-3 left-3 z-10 w-7 h-7 rounded-full bg-black text-white text-[11px] font-black flex items-center justify-center shadow-md">
+                <div className={styles.rankBadge}>
                   #{index + 1}
                 </div>
               )}
@@ -203,10 +204,10 @@ export default async function ProductsPage({
           ))}
         </div>
       ) : (
-        <div className="text-center py-20">
-          <div className="text-6xl mb-4">🔍</div>
-          <h2 className="text-xl font-bold mb-2">No products found</h2>
-          <p className="text-[#666]">Try a different category or search term.</p>
+        <div className={styles.emptyState}>
+          <div className={styles.emptyIcon}>🔍</div>
+          <h2 className={styles.emptyTitle}>No products found</h2>
+          <p className={styles.emptyText}>Try a different category or search term.</p>
         </div>
       )}
     </div>
@@ -215,14 +216,7 @@ export default async function ProductsPage({
 
 function FilterLink({ label, href, active }: { label: string; href: string; active: boolean }) {
   return (
-    <a
-      href={href}
-      className={
-        active
-          ? "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-black text-white rounded-full"
-          : "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border border-[#E0E0E0] text-[#666] rounded-full hover:border-black hover:text-black transition-colors"
-      }
-    >
+    <a href={href} className={active ? styles.filterPillActive : styles.filterPill}>
       {label}
     </a>
   );
@@ -240,14 +234,7 @@ function FilterLinkWithIcon({
   active: boolean;
 }) {
   return (
-    <a
-      href={href}
-      className={
-        active
-          ? "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-black text-white rounded-full"
-          : "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border border-[#E0E0E0] text-[#666] rounded-full hover:border-black hover:text-black transition-colors"
-      }
-    >
+    <a href={href} className={active ? styles.filterPillActive : styles.filterPill}>
       {icon}
       {label}
     </a>

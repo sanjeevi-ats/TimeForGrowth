@@ -566,11 +566,10 @@ function AdvancedProductCard({ product }: AdvancedProductCardProps) {
                 src={imageUrl}
                 alt={product.name}
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
                 priority={false}
               />
             ) : (
-              <div className="w-full h-full bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 flex items-center justify-center">
+              <div>
                 <div className="text-center">
                   <div className="text-5xl mb-2">📦</div>
                   <div className="text-xs text-gray-600">Product Image</div>

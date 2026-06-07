@@ -9,6 +9,7 @@ import { StarRating } from "@/components/products/ProductCard";
 import ProductCard from "@/components/products/ProductCard";
 import { getRegion, getCountryName, getCountryFlag } from "@/lib/geo";
 import type { Product } from "@/lib/types";
+import styles from "./ProductDetails.module.css";
 
 interface Props {
   params: { slug: string };
@@ -64,7 +65,6 @@ async function getRelatedProducts(category: any, exclude: string): Promise<Produ
   }
 }
 
-
 export default async function SingleProductPage({ params, searchParams }: Props) {
   const decodedSlug = decodeURIComponent(params.slug);
   const product = await getProduct(decodedSlug);
@@ -90,10 +90,10 @@ export default async function SingleProductPage({ params, searchParams }: Props)
     "@type": "Product",
     name: product.name,
     description: product.shortDescription,
-    image: product.images?.[0] 
-      ? urlFor(product.images[0]).width(800).height(800).url() 
-      : product.mainImageUrl 
-      ? product.mainImageUrl 
+    image: product.images?.[0]
+      ? urlFor(product.images[0]).width(800).height(800).url()
+      : product.mainImageUrl
+      ? product.mainImageUrl
       : undefined,
     aggregateRating: product.rating
       ? { "@type": "AggregateRating", ratingValue: product.rating, bestRating: 5, worstRating: 1 }
@@ -104,18 +104,18 @@ export default async function SingleProductPage({ params, searchParams }: Props)
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <div className="w-full bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className={styles.pageWrapper}>
+        <div className={styles.container}>
           {/* Unavailable banner */}
           {searchParams.unavailable && (
-            <div className="mb-6 p-4 border border-[#E0E0E0] rounded-card bg-[#F9F9F9] text-sm text-[#666]">
+            <div className={styles.unavailableBanner}>
               ⚠️ This product is not currently available for direct purchase in your region.
               {relatedProducts.length > 0 && " Here are some alternatives you might like:"}
             </div>
           )}
 
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-1 text-xs text-[#666] mb-6">
+          <nav className={styles.breadcrumb}>
             <Link href="/" className="hover:text-black transition-colors">Home</Link>
             <ChevronRight size={12} />
             <Link href="/products" className="hover:text-black transition-colors">Products</Link>
@@ -132,106 +132,104 @@ export default async function SingleProductPage({ params, searchParams }: Props)
           </nav>
 
           {/* Main 2-col layout */}
-          <div className="grid grid-cols-1 desktop:grid-cols-2 gap-10 mb-16">
-          {/* Left: Images */}
-          <ProductImageGallery images={product.images || []} mainImageUrl={product.mainImageUrl} productName={product.name} />
+          <div className={styles.productgrid}>
+            {/* Left: Images */}
+            <ProductImageGallery images={product.images || []} mainImageUrl={product.mainImageUrl} productName={product.name} />
 
-          {/* Right: Product info */}
-          <div>
-            {categoryName && (
-              <Link href={`/products?category=${categorySlug}`} className="badge-tag mb-3 inline-block hover:border-black">
-                {categoryName}
-              </Link>
-            )}
+            {/* Right: Product info */}
+            <div className={styles.productInfo}>
+              {categoryName && (
+                <Link href={`/products?category=${categorySlug}`} className={`badge-tag inline-block hover:border-black ${styles.categoryTag}`}>
+                  {categoryName}
+                </Link>
+              )}
 
-            <h1 className="text-3xl font-black text-black mb-3 leading-tight">{product.name}</h1>
+              <h1 className={styles.productTitle}>{product.name}</h1>
 
-            <div className="flex items-center gap-3 mb-4">
-              <StarRating rating={product.rating || 0} size="md" />
-              <span className="text-sm text-[#666]">{product.rating?.toFixed(1)} / 5</span>
-              <a href="#verdict" className="text-xs text-[#666] underline hover:text-black transition-colors">
-                (Our Verdict)
+              <div className={styles.ratingRow}>
+                <StarRating rating={product.rating || 0} size="md" />
+                <span className={styles.ratingText}>{product.rating?.toFixed(1)} / 5</span>
+                <a href="#verdict" className={styles.verdictLink}>
+                  (Our Verdict)
+                </a>
+              </div>
+
+              {/* Region callout */}
+              <div className={`callout-region ${styles.regionCallout}`}>
+                <span className="mr-2">{getCountryFlag(region)}</span>
+                Shopping from <strong>{getCountryName(region)}</strong> —{" "}
+                {regionLink
+                  ? `We'll send you to ${regionLink.platform}`
+                  : `We'll find the best available store`}
+              </div>
+
+              {/* Price */}
+              {regionLink?.displayPrice && (
+                <div className={styles.priceSection}>
+                  <span className={styles.price}>{regionLink.displayPrice}</span>
+                  <p className={styles.priceNote}>Price may vary by region and retailer</p>
+                </div>
+              )}
+
+              {/* Buy Now */}
+              <a
+                href={`/go/${slug}/${region}`}
+                className={`btn-primary ${styles.buyButton}`}
+              >
+                <ShoppingCart size={18} />
+                Buy Now
               </a>
+
+              {regionLink && (
+                <p className={styles.redirectText}>
+                  You will be redirected to <strong>{regionLink.platform}</strong> to complete your purchase
+                </p>
+              )}
             </div>
+          </div>
 
-            <p className="text-[#333] leading-relaxed mb-6">{product.shortDescription}</p>
-
-            {/* Region callout */}
-            <div className="callout-region mb-4">
-              <span className="mr-2">{getCountryFlag(region)}</span>
-              Shopping from <strong>{getCountryName(region)}</strong> —{" "}
-              {regionLink
-                ? `We'll send you to ${regionLink.platform}`
-                : `We'll find the best available store`}
-            </div>
-
-            {/* Price */}
-            {regionLink?.displayPrice && (
-              <div className="mb-4">
-                <span className="text-2xl font-black">{regionLink.displayPrice}</span>
-                <p className="text-xs text-[#999] mt-0.5">Price may vary by region and retailer</p>
+          {/* Available On — full width below image + info */}
+          {product.affiliateLinks && product.affiliateLinks.length > 0 && (
+            <div className={styles.availableOnWrapper}>
+              <div className={styles.availableOnHeader}>
+                Available On
               </div>
-            )}
-
-            {/* Buy Now */}
-            <a
-              href={`/go/${slug}/${region}`}
-              className="btn-primary w-full justify-center text-base py-4 mb-3"
-            >
-              <ShoppingCart size={18} />
-              Buy Now
-            </a>
-
-            {regionLink && (
-              <p className="text-xs text-[#999] text-center mb-6">
-                You will be redirected to <strong>{regionLink.platform}</strong> to complete your purchase
-              </p>
-            )}
-
-            {/* Available On table */}
-            {product.affiliateLinks && product.affiliateLinks.length > 0 && (
-              <div className="border border-[#E0E0E0] rounded-card overflow-hidden">
-                <div className="px-4 py-3 bg-[#F9F9F9] border-b border-[#E0E0E0] text-xs font-semibold uppercase tracking-wider text-[#666]">
-                  Available On
-                </div>
-                <div className="divide-y divide-[#E0E0E0]">
-                  {product.affiliateLinks.filter((l) => l.active).map((link) => (
-                    <div key={link.countryCode} className="flex items-center justify-between px-4 py-3 text-sm">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-[#666] w-8">{link.countryCode}</span>
-                        <span>{link.platform}</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        {link.displayPrice && <span className="font-semibold">{link.displayPrice}</span>}
-                        <a
-                          href={`/go/${slug}/${link.countryCode}`}
-                          className="text-xs text-[#666] hover:text-black flex items-center gap-0.5 transition-colors"
-                        >
-                          Visit <ExternalLink size={11} />
-                        </a>
-                      </div>
+              <div className={styles.availableOnList}>
+                {product.affiliateLinks.filter((l) => l.active).map((link) => (
+                  <div key={link.countryCode} className={styles.availableOnRow}>
+                    <div className={styles.availableOnLeft}>
+                      <span className={styles.availableOnCode}>{link.countryCode}</span>
+                      <span>{link.platform}</span>
                     </div>
-                  ))}
-                </div>
+                    <div className={styles.availableOnRight}>
+                      {link.displayPrice && <span className={styles.availableOnPrice}>{link.displayPrice}</span>}
+                      <a
+                        href={`/go/${slug}/${link.countryCode}`}
+                        className={styles.availableOnLink}
+                      >
+                        Visit <ExternalLink size={11} />
+                      </a>
+                    </div>
+                  </div>
+                ))}
               </div>
-            )}
-          </div>
-        </div>
-
-        {/* Tabs: Overview, Specs, Verdict */}
-        <ProductTabs product={product} />
-
-        {/* Related products */}
-        {relatedProducts.length > 0 && (
-          <div className="mt-16">
-            <h2 className="section-heading mb-6">You Might Also Like</h2>
-            <div className="grid grid-cols-2 tablet:grid-cols-4 gap-4">
-              {relatedProducts.map((p) => (
-                <ProductCard key={p._id} product={p} variant="compact" />
-              ))}
             </div>
-          </div>
-        )}
+          )}
+
+          {/* Tabs: Overview, Specs, Verdict */}
+          <ProductTabs product={product} />
+          {/* Related products */}
+          {relatedProducts.length > 0 && (
+
+            <div className={styles.relatedProducts}>
+              <h2 className={`section-heading ${styles.relatedHeading}`}>You Might Also Like</h2>
+              <div className={styles.relatedGrid}>
+                {relatedProducts.map((p) => (
+                  <ProductCard key={p._id} product={p} variant="compact" />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>
@@ -244,21 +242,21 @@ export default async function SingleProductPage({ params, searchParams }: Props)
 function ProductImageGallery({ images, mainImageUrl, productName }: { images: any[]; mainImageUrl?: string; productName: string }) {
   if (images.length === 0 && !mainImageUrl) {
     return (
-      <div className="aspect-square rounded-card bg-[#F5F5F5] flex items-center justify-center">
-        <span className="text-8xl opacity-20">📦</span>
+      <div className={styles.galleryPlaceholder}>
+        <span className={styles.galleryPlaceholderIcon}>📦</span>
       </div>
     );
   }
 
   return (
-    <div className="space-y-3">
-      <div className="relative aspect-square rounded-card overflow-hidden bg-[#F5F5F5]">
+    <div className={styles.galleryWrapper}>
+      <div className={styles.galleryMainImage}>
         {images.length > 0 ? (
           <Image
-            src={urlFor(images[0]).width(800).height(800).url()}
+            src={urlFor(images[0]).width(800).height(1067).url()}
             alt={images[0].alt || productName}
             fill
-            className="object-contain p-4"
+            className="object-cover"
             priority
           />
         ) : (
@@ -266,15 +264,15 @@ function ProductImageGallery({ images, mainImageUrl, productName }: { images: an
             src={mainImageUrl!}
             alt={productName}
             fill
-            className="object-contain p-4"
+            className="object-cover"
             priority
           />
         )}
       </div>
       {images.length > 1 && (
-        <div className="flex gap-2">
+        <div className={styles.galleryThumbs}>
           {images.slice(0, 6).map((img, i) => (
-            <div key={img._key || i} className="relative w-16 h-16 rounded border border-[#E0E0E0] overflow-hidden cursor-pointer hover:border-black transition-colors shrink-0">
+            <div key={img._key || i} className={styles.galleryThumb}>
               <Image
                 src={urlFor(img).width(120).height(120).url()}
                 alt={img.alt || `${productName} image ${i + 1}`}
@@ -298,26 +296,26 @@ function ProductTabs({ product }: { product: any }) {
   const hasCons = product.cons && product.cons.length > 0;
 
   return (
-    <div id="verdict" className="border border-[#E0E0E0] rounded-card overflow-hidden">
+    <div id="verdict" className={styles.tabsWrapper}>
       {/* Overview */}
-      <div className="p-6 border-b border-[#E0E0E0]">
-        <h2 className="font-bold text-lg mb-4 flex items-center gap-2">
-          <span className="w-1 h-5 bg-black rounded-full inline-block" />
+      <div className={styles.tabSection}>
+        <h2 className={styles.tabHeading}>
+          <span className={styles.tabHeadingAccent} />
           Overview
         </h2>
         {product.shortDescription && (
-          <p className="text-[#333] leading-relaxed mb-4">{product.shortDescription}</p>
+          <p className={styles.tabDescription}>{product.shortDescription}</p>
         )}
 
         {(hasPros || hasCons) && (
-          <div className="grid tablet:grid-cols-2 gap-6 mt-4">
+          <div className={styles.prosConsGrid}>
             {hasPros && (
               <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider mb-3 text-black">Pros</h3>
-                <ul className="space-y-2">
+                <h3 className={styles.prosConsTitle}>Pros</h3>
+                <ul className={styles.prosConsList}>
                   {product.pros.map((pro: string, i: number) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-[#333]">
-                      <span className="text-black font-bold mt-0.5">+</span>
+                    <li key={i} className={styles.prosConsItem}>
+                      <span className={styles.prosConsSign}>+</span>
                       {pro}
                     </li>
                   ))}
@@ -326,11 +324,11 @@ function ProductTabs({ product }: { product: any }) {
             )}
             {hasCons && (
               <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider mb-3 text-black">Cons</h3>
-                <ul className="space-y-2">
+                <h3 className={styles.prosConsTitle}>Cons</h3>
+                <ul className={styles.prosConsList}>
                   {product.cons.map((con: string, i: number) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-[#333]">
-                      <span className="text-black font-bold mt-0.5">−</span>
+                    <li key={i} className={styles.prosConsItem}>
+                      <span className={styles.prosConsSign}>−</span>
                       {con}
                     </li>
                   ))}
@@ -343,17 +341,17 @@ function ProductTabs({ product }: { product: any }) {
 
       {/* Specs */}
       {hasSpecs && (
-        <div className="p-6 border-b border-[#E0E0E0]">
-          <h2 className="font-bold text-lg mb-4 flex items-center gap-2">
-            <span className="w-1 h-5 bg-black rounded-full inline-block" />
+        <div className={styles.tabSection}>
+          <h2 className={styles.tabHeading}>
+            <span className={styles.tabHeadingAccent} />
             Specifications
           </h2>
-          <table className="w-full text-sm">
+          <table className={styles.specsTable}>
             <tbody>
               {product.specs.map((spec: any, i: number) => (
-                <tr key={i} className={i % 2 === 0 ? "bg-[#F9F9F9]" : "bg-white"}>
-                  <td className="py-2.5 px-4 font-medium text-[#333] w-1/2">{spec.key}</td>
-                  <td className="py-2.5 px-4 text-[#666]">{spec.value}</td>
+                <tr key={i} className={i % 2 === 0 ? styles.specsRowEven : styles.specsRowOdd}>
+                  <td className={styles.specsKey}>{spec.key}</td>
+                  <td className={styles.specsValue}>{spec.value}</td>
                 </tr>
               ))}
             </tbody>
@@ -363,16 +361,16 @@ function ProductTabs({ product }: { product: any }) {
 
       {/* Verdict */}
       {product.verdict && (
-        <div className="p-6">
-          <h2 className="font-bold text-lg mb-4 flex items-center gap-2">
-            <span className="w-1 h-5 bg-black rounded-full inline-block" />
+        <div className={styles.tabSection}>
+          <h2 className={styles.tabHeading}>
+            <span className={styles.tabHeadingAccent} />
             Our Verdict
           </h2>
-          <p className="text-[#333] leading-relaxed mb-6">{product.verdict}</p>
+          <p className={styles.verdictText}>{product.verdict}</p>
           {product.ratingOutOf10 && (
-            <div className="inline-flex items-baseline gap-1">
-              <span className="text-5xl font-black">{product.ratingOutOf10}</span>
-              <span className="text-2xl text-[#999] font-light">/10</span>
+            <div className={styles.verdictScore}>
+              <span className={styles.verdictScoreNumber}>{product.ratingOutOf10}</span>
+              <span className={styles.verdictScoreDenom}>/10</span>
             </div>
           )}
         </div>

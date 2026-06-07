@@ -1,0 +1,225 @@
+.pageWrapper {
+  max-width: 80rem; /* max-w-7xl */
+  margin: 0 auto;
+  padding: 1.5rem 0.75rem;
+}
+
+/* ── Page Header ── */
+.pageHeader {
+  margin-bottom: 2rem;
+}
+
+.pageTitle {
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: #000;
+  margin-bottom: 0.5rem;
+  line-height: 1.1;
+}
+
+.pageSubtitle {
+  color: #666;
+  font-size: 0.875rem;
+}
+
+/* ── Filter Bar ── */
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  align-items: center;
+}
+
+.filterDivider {
+  display: none;
+  width: 1px;
+  background: #e0e0e0;
+  margin: 0 0.25rem;
+  align-self: stretch;
+}
+
+.filterSortGroup {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ── Filter Pills ── */
+.filterPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid #e0e0e0;
+  color: #666;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.filterPill:hover {
+  border-color: #000;
+  color: #000;
+}
+
+.filterPillActive {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #000;
+  color: #fff;
+  border-radius: 9999px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* ── Product List ── */
+.productList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.productRow {
+  position: relative;
+}
+
+/* Mobile only: force horizontal layout inside the card */
+@media (max-width: 567px) {
+  /* Card root element — always row */
+  .productRow > * {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+  }
+
+  /* First child = image container — fixed width */
+  .productRow > * > *:first-child {
+    width: 120px !important;
+    min-width: 120px !important;
+    flex-shrink: 0 !important;
+    height: auto !important;
+    aspect-ratio: unset !important;
+  }
+
+  /* Second child = info container — fills rest */
+  .productRow > * > *:nth-child(2) {
+    flex: 1 !important;
+    min-width: 0 !important;
+    width: auto !important;
+  }
+
+  /* Image itself */
+  .productRow img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+}
+
+/* ── Top 10 Badge ── */
+.rankBadge {
+  position: absolute;
+  top: -0.625rem;
+  left: -0.625rem;
+  z-index: 10;
+  width: 1.75rem;
+  height: 1.75rem;
+  background: #000;
+  color: #fff;
+  border-radius: 9999px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* ── Empty State ── */
+.emptyState {
+  text-align: center;
+  padding: 5rem 1rem;
+}
+
+.emptyIcon {
+  font-size: 3.75rem;
+  margin-bottom: 1rem;
+}
+
+.emptyTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.emptyText {
+  color: #666;
+  font-size: 0.875rem;
+}
+
+/* ── Force horizontal card layout on mobile inside product rows ── */
+.productRow > * {
+  width: 100%;
+}
+
+/* Ensure any direct flex/grid child of productRow stays horizontal on mobile */
+.productRow > * > * {
+  min-width: 0;
+}
+
+/* ── Force ProductCard horizontal layout on mobile (image left, info right) ── */
+/* Targets the card wrapper inside each productRow */
+.productRow > a,
+.productRow > div > a {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+}
+
+/* First child = image side — keep it a fixed width, never collapse */
+.productRow > a > *:first-child,
+.productRow > div > a > *:first-child {
+  flex-shrink: 0 !important;
+  /* width: 110px !important; */
+  /* min-width: 110px !important; */
+}
+
+/* Second child = info side — take remaining space */
+.productRow > a > *:last-child,
+.productRow > div > a > *:last-child {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+/* ── Responsive ── */
+@media (min-width: 640px) {
+  .filterDivider {
+    display: block;
+  }
+}
+
+@media (min-width: 640px) {
+  .pageWrapper {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pageWrapper {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
